@@ -4,6 +4,23 @@
   "description": "Generate printable coffee coupons for Cursor community events. Web UI + CLI.",
   "private": false,
   "license": "MIT",
+  "author": "Luisfer Romero Calero",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/luisfer/cursor-cafe-coupons.git"
+  },
+  "homepage": "https://github.com/luisfer/cursor-cafe-coupons",
+  "bugs": "https://github.com/luisfer/cursor-cafe-coupons/issues",
+  "keywords": [
+    "cursor",
+    "ambassador",
+    "coupons",
+    "cafe",
+    "community",
+    "nextjs",
+    "cli",
+    "print"
+  ],
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",

@@ -1,14 +1,20 @@
-# cursor-cafe-coupons
+![Cursor Cafe Coupons banner](public/readme-banner.png)
 
-![Banner](public/readme-banner.png)
+# cursor-cafe-coupons
 
 Generate printable coffee coupons for Cursor community events. Customize the venue, drink menu, and branding — then print or save as HTML/PDF.
 
 Built for [Cursor Ambassadors](https://cursor.com/ambassadors) who partner with local cafes for meetups and need physical drink vouchers.
 
+## Prerequisites
+
+- [Node.js](https://nodejs.org/) **v18 or higher**
+
 ## Quick Start
 
 ```bash
+git clone https://github.com/luisfer/cursor-cafe-coupons.git
+cd cursor-cafe-coupons
 npm install
 npm run dev
 ```
@@ -164,7 +170,9 @@ This repo is part of a growing set of open-source tools for Cursor community org
 
 ## Credits
 
-Built by [Luis Fernando De Pombo](https://github.com/luisfer) as part of the Cursor Ambassador open-source toolkit.
+Designed and implemented by [Luis Fernando Romero Calero](https://lfrc.me) and [Cursor](https://cursor.com).
+
+Part of the [Cursor Ambassador](https://cursor.com/ambassador) open-source toolkit.
 
 ## License
 
