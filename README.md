@@ -140,6 +140,8 @@ public/
 - **Tailwind CSS v4**
 - No database — everything runs client-side
 
+Before shipping: `npm run typecheck` and `npm run build` should pass.
+
 ## Deployment
 
 Deploy to [Vercel](https://vercel.com) with zero config, or build and serve anywhere:
