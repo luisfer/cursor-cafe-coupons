@@ -1,0 +1,32 @@
+{
+  "venue": {
+    "name": "Venue Name",
+    "logo": "",
+    "logoHeight": 42,
+    "wifi": "Free Venue Wifi"
+  },
+  "event": {
+    "date": "27.03.2026"
+  },
+  "menu": [
+    { "name": "Espresso", "temps": ["hot"] },
+    { "name": "Americano", "temps": ["hot", "iced"] },
+    { "name": "Latte", "temps": ["hot", "iced"] },
+    { "name": "Cappuccino", "temps": ["hot", "iced"] },
+    { "name": "Cold Brew", "temps": ["iced"] }
+  ],
+  "options": {
+    "beanChoices": [],
+    "milkChoices": ["Regular milk", "Oat milk"],
+    "footerNote": "Valid for 1 complimentary drink",
+    "motto": "Happy building!",
+    "showCouponNumber": true
+  },
+  "print": {
+    "couponsPerPage": "auto"
+  },
+  "theme": {
+    "headerBg": "#14120b",
+    "headerText": "#edecec"
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/luisfer/cursor-cafe-coupons/configs/schema.json",
+  "title": "Cursor Cafe Coupons Config",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["venue", "event", "menu", "options", "print", "theme"],
+  "properties": {
+    "venue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "logo", "logoHeight", "wifi"],
+      "properties": {
+        "name": { "type": "string" },
+        "logo": { "type": "string", "description": "URL or base64 data URL; empty for text fallback" },
+        "logoHeight": { "type": "number", "minimum": 16, "maximum": 80 },
+        "wifi": { "type": "string" }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["date"],
+      "properties": {
+        "date": { "type": "string" }
+      }
+    },
+    "menu": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "temps"],
+        "properties": {
+          "name": { "type": "string" },
+          "kind": {
+            "type": "string",
+            "enum": ["section"],
+            "description": "Set to \"section\" for category headings (e.g. Coffee, Non-Coffee). Use temps: [] for sections."
+          },
+          "temps": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["hot", "iced"] }
+          }
+        }
+      }
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["milkChoices", "footerNote", "showCouponNumber"],
+      "properties": {
+        "beanChoices": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Bean/roast options shown as checkboxes"
+        },
+        "milkChoices": { "type": "array", "items": { "type": "string" } },
+        "footerNote": { "type": "string" },
+        "motto": {
+          "type": "string",
+          "description": "Tagline on branded footer bar. Omit for default \"Happy building!\". Empty string hides the bar."
+        },
+        "menuTitle": {
+          "type": "string",
+          "description": "Custom heading above the drink list. Omit for the default."
+        },
+        "showCouponNumber": { "type": "boolean" }
+      }
+    },
+    "print": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["couponsPerPage"],
+      "properties": {
+        "couponsPerPage": {
+          "oneOf": [
+            {
+              "type": "string",
+              "const": "auto",
+              "description": "Pick 9, 6, or 3 per page from estimated menu height (landscape 3-column grid)."
+            },
+            { "type": "integer", "minimum": 1, "maximum": 9 }
+          ]
+        },
+        "orientation": {
+          "type": "string",
+          "enum": ["portrait", "landscape"],
+          "description": "Deprecated; print output is always landscape A4."
+        }
+      }
+    },
+    "theme": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["headerBg", "headerText"],
+      "properties": {
+        "headerBg": { "type": "string" },
+        "headerText": { "type": "string" }
+      }
+    }
+  }
+}
