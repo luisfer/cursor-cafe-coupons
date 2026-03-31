@@ -83,40 +83,41 @@ function printScale(
     headerPadH:    px(s(22, 6)),
     headerGapV:    px(s(2, 1)),
     headerGapH:    px(s(6, 3)),
+    headerRightGap: px(s(36, 14)),
     logoH:         px(s(26, 10)),
-    venueLogoH:    px(s(42, 14)),
+    venueLogoH:    px(s(72, 24)),
     dateFs:        px(sf(15, 8)),
-    numFs:         px(sf(13, 8)),
+    numFs:         px(sf(14, 8)),
     numBoxW:       px(s(52, 20)),
     numBoxH:       px(s(24, 12)),
     bodyPadT:      px(s(18, 3)),
     bodyPadH:      px(s(22, 6)),
-    headingFs:     px(sf(9, 6)),
+    headingFs:     px(sf(13, 8)),
     headingMb:     px(s(12, 2)),
-    secFs:         px(sf(10, 7)),
+    secFs:         px(sf(14, 9)),
     secPadT:       px(sd(10, 2)),
     secPadB:       px(sd(6, 1)),
     drinkPad:      px(sd(6, 1)),
-    drinkFs:       px(sf(14, 9)),
+    drinkFs:       px(sf(16, 10)),
     drinkMl:       px(s(12, 3)),
-    cbW:           px(s(16, 8)),
-    cbSmW:         px(s(13, 7)),
+    cbW:           px(s(18, 9)),
+    cbSmW:         px(s(15, 8)),
     tempGap:       px(s(16, 3)),
-    tempFs:        px(sf(13, 8)),
+    tempFs:        px(sf(15, 9)),
     tempOptionGap: px(s(5, 2)),
     botPadV:       px(s(14, 2)),
     botPadH:       px(s(22, 6)),
     botGap:        px(s(6, 1)),
-    choiceFs:      px(sf(9, 6)),
+    choiceFs:      px(sf(13, 8)),
     choiceMb:      px(s(6, 2)),
     milkGap:       px(s(14, 4)),
-    milkFs:        px(sf(13, 8)),
-    milkCbW:       px(s(16, 8)),
-    wifiFs:        px(s(13, 7)),
-    footFs:        px(s(11, 5)),
+    milkFs:        px(sf(15, 9)),
+    milkCbW:       px(s(18, 9)),
+    wifiFs:        px(s(15, 8)),
+    footFs:        px(s(15, 7)),
     brandPadV:     px(s(11, 2)),
     brandPadH:     px(s(22, 6)),
-    brandFs:       px(s(10, 5)),
+    brandFs:       px(s(14, 7)),
     borderW:       k > 0.5 ? '2px' : k > 0.3 ? '1.5px' : '1px',
     borderR:       k > 0.5 ? '4px' : '2px',
     borderSmR:     k > 0.5 ? '3px' : '2px',
@@ -129,7 +130,7 @@ function buildPrintOverrides(p: ReturnType<typeof printScale>): string {
     .coupon .logos{gap:${p.headerGapH};flex:1;min-width:0}
     .coupon .logos img{height:${p.logoH} !important;width:auto}
     .coupon .logos img.venue-logo{max-height:${p.venueLogoH} !important;object-fit:contain}
-    .coupon .header-right{gap:${p.headerGapH}}
+    .coupon .header-right{gap:${p.headerRightGap}}
     .coupon .date{font-size:${p.dateFs}}
     .coupon .coupon-number{font-size:${p.numFs}}
     .coupon .number-box{width:${p.numBoxW};height:${p.numBoxH}}
@@ -146,10 +147,12 @@ function buildPrintOverrides(p: ReturnType<typeof printScale>): string {
     .coupon .temp-option{font-size:${p.tempFs};gap:${p.tempOptionGap}}
     .coupon .temp-single{font-size:${p.tempFs}}
     .coupon .bottom{padding:${p.botPadV} ${p.botPadH};gap:${p.botGap}}
+    .coupon .choices-row{gap:${p.milkGap}}
     .coupon .choice-label{font-size:${p.choiceFs};margin-bottom:${p.choiceMb}}
     .coupon .milk-options{gap:${p.milkGap}}
     .coupon .milk-option{font-size:${p.milkFs};gap:${p.tempOptionGap}}
     .coupon .milk-option .cb{width:${p.milkCbW};height:${p.milkCbW};border-width:${p.borderW}}
+    .coupon .bottom-meta{gap:${p.botGap} ${p.milkGap}}
     .coupon .wifi{font-size:${p.wifiFs}}
     .coupon .footer-note{font-size:${p.footFs}}
     .coupon .brand-footer{padding:${p.brandPadV} ${p.brandPadH};font-size:${p.brandFs}}
@@ -169,39 +172,73 @@ function buildCSS(config: CouponConfig, mode: 'single' | 'print'): string {
     .logos img{height:26px;width:auto;display:block}
     .logos img.venue-logo{height:var(--venue-logo-h,42px);object-fit:contain}
     .date{font-size:15px;font-weight:600;letter-spacing:.06em;color:${theme.headerText}}
-    .header-right{display:flex;align-items:center;gap:18px}
-    .coupon-number{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:rgba(237,236,236,.65)}
+    .header-right{display:flex;align-items:center;gap:32px}
+    .coupon-number{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:rgba(237,236,236,.65)}
     .number-box{width:52px;height:24px;border:1.5px solid rgba(237,236,236,.35);background:#fff;border-radius:4px}
     .body{padding:18px 22px 4px;flex:1;display:flex;flex-direction:column}
-    .drinks-heading{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.16em;color:#6b6560;margin-bottom:12px}
+    .drinks-heading{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:#6b6560;margin-bottom:12px}
     .drink-list{display:flex;flex-direction:column;flex:1}
-    .section-row{padding:10px 0 6px;margin-top:4px;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#14120b;border-bottom:1px solid #14120b}
+    .section-row{padding:10px 0 6px;margin-top:4px;font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#14120b;border-bottom:1px solid #14120b}
     .section-row:first-child{margin-top:0;padding-top:0}
-    .drink-row{display:flex;align-items:center;padding:6px 0;border-bottom:1px solid #e8e4dc}
+    .drink-row{display:flex;align-items:center;padding:7px 0;border-bottom:1px solid #e8e4dc}
     .drink-row:last-child{border-bottom:none}
-    .cb{width:16px;height:16px;border:1.5px solid #14120b;border-radius:4px;flex-shrink:0}
-    .cb.sm{width:13px;height:13px;border-radius:3px}
-    .drink-name{min-width:140px;font-size:14px;font-weight:600;margin-left:12px;letter-spacing:-.02em;color:#14120b}
+    .cb{width:18px;height:18px;border:1.5px solid #14120b;border-radius:4px;flex-shrink:0}
+    .cb.sm{width:15px;height:15px;border-radius:3px}
+    .drink-name{min-width:140px;font-size:16px;font-weight:600;margin-left:12px;letter-spacing:-.02em;color:#14120b}
     .temp-group{display:flex;align-items:center;gap:16px;margin-left:auto}
-    .temp-option{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:#3d3a36}
-    .temp-single{font-size:13px;font-weight:500;color:#3d3a36;font-style:italic;margin-left:auto}
-    .bottom{margin-top:auto;border-top:1px solid #e8e4dc;padding:14px 22px 16px;display:flex;flex-direction:column;gap:6px}
+    .temp-option{display:flex;align-items:center;gap:5px;font-size:15px;font-weight:500;color:#3d3a36}
+    .temp-single{font-size:15px;font-weight:500;color:#3d3a36;font-style:italic;margin-left:auto}
+    .bottom{margin-top:auto;border-top:1px solid #e8e4dc;padding:14px 22px 16px;display:flex;flex-direction:column;gap:10px}
     .bottom-row{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px}
-    .choice-block{margin-top:8px}
-    .choice-block:first-of-type{margin-top:0}
-    .choice-label{font-size:9px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6b6560;margin-bottom:6px}
+    .choices-row{display:flex;gap:24px;flex-wrap:wrap}
+    .choice-block{flex:1;min-width:0}
+    .choice-label{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#6b6560;margin-bottom:6px}
     .milk-options{display:flex;align-items:center;flex-wrap:wrap;gap:14px}
-    .milk-option{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:#3d3a36}
-    .milk-option .cb{width:16px;height:16px;border-width:1.5px}
-    .wifi{font-size:13px;color:#3d3a36;font-weight:500}
+    .milk-option{display:flex;align-items:center;gap:5px;font-size:15px;font-weight:500;color:#3d3a36}
+    .milk-option .cb{width:18px;height:18px;border-width:1.5px}
+    .bottom-meta{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:12px 32px;margin-top:4px;padding-top:2px}
+    .wifi{font-size:15px;color:#3d3a36;font-weight:500}
     .wifi strong{font-weight:700;color:#14120b}
-    .footer-note{font-size:11px;color:#5c5750;font-weight:500;letter-spacing:.02em;line-height:1.35}
-    .brand-footer{padding:11px 22px;text-align:center;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:${theme.headerBg};color:${theme.headerText};-webkit-print-color-adjust:exact;print-color-adjust:exact}
+    .footer-note{font-size:15px;color:#5c5750;font-weight:500;letter-spacing:.02em;line-height:1.35}
+    .brand-footer{padding:11px 22px;text-align:center;font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;background:${theme.headerBg};color:${theme.headerText};-webkit-print-color-adjust:exact;print-color-adjust:exact}
   `
 
   if (mode === 'print') {
     const perPage = resolveCouponsPerPage(config)
     const menuItems = config.menu.filter((m) => m.kind !== 'section').length
+    const isPortrait = config.print.orientation === 'portrait'
+    const menuCols = config.print.menuColumns ?? 1
+
+    if (isPortrait) {
+      const rows = perPage
+      const cellH = 297 / rows
+      const p = printScale(cellH * (menuCols > 1 ? 1.6 : 1), menuItems)
+
+      const menuColsCSS = menuCols > 1 ? `
+      .coupon .drink-list{display:block !important;flex:none !important;column-count:${menuCols};column-gap:28px}
+      .coupon .drink-row{break-inside:avoid;display:flex}
+      .coupon .section-row{break-inside:avoid;break-after:avoid}
+      .coupon .drink-row:last-child{border-bottom:1px solid #e8e4dc}
+      ` : ''
+
+      return `<style>${base}
+        @page{size:A4 portrait;margin:0}
+        body{background:#f5f5f5;padding:20px;display:block}
+        .print-grid{width:210mm;height:297mm;margin:0 auto;display:flex;flex-direction:column}
+        .grid-row{display:flex;flex-direction:row;align-items:stretch;flex:1;min-height:0}
+        .grid-row .coupon{flex:1;min-width:0;height:100%;border:2px solid #14120b;border-radius:0;overflow:hidden;display:flex;flex-direction:column}
+        .cut-h{height:0;flex-shrink:0;position:relative}
+        .cut-h::after{content:"";position:absolute;left:0;right:0;top:50%;border-top:1px dashed #ccc}
+        .print-hint{text-align:center;font-size:14px;color:#666;margin-bottom:16px;font-family:'DM Sans',sans-serif}
+        ${buildPrintOverrides(p)}
+        ${menuColsCSS}
+        @media print{
+          body{background:#fff;padding:0;margin:0}
+          .print-hint{display:none}
+          .print-grid{width:210mm;height:297mm}
+        }
+      </style>`
+    }
 
     const rows = Math.ceil(perPage / 3)
     const cellH = 210 / rows
@@ -264,6 +301,11 @@ function buildCouponBlock(config: CouponConfig): string {
     ? `<div class="brand-footer">${escapeHTML(motto)}</div>`
     : ''
 
+  const hasChoices = beanHTML || milkHTML
+  const choicesRow = hasChoices
+    ? `<div class="choices-row">${beanHTML}${milkHTML}</div>`
+    : ''
+
   return `<div class="coupon">
   <div class="header-band">
     <div class="logos">
@@ -280,10 +322,11 @@ function buildCouponBlock(config: CouponConfig): string {
     <div class="drink-list">${drinkRows}</div>
   </div>
   <div class="bottom">
-    ${wifiHTML}
-    ${beanHTML}
-    ${milkHTML}
-    <div class="footer-note">${escapeHTML(options.footerNote)}</div>
+    ${choicesRow}
+    <div class="bottom-meta">
+      ${wifiHTML}
+      <div class="footer-note">${escapeHTML(options.footerNote)}</div>
+    </div>
   </div>
   ${brandFooterHTML}
 </div>`
@@ -298,26 +341,39 @@ export function generateCouponHTML(
 
   if (mode === 'print') {
     const count = resolveCouponsPerPage(config)
-    const cols = Math.min(count, 3)
-    const rows = Math.ceil(count / 3)
+    const isPortrait = config.print.orientation === 'portrait'
+    const orientLabel = isPortrait ? 'portrait' : 'landscape'
     const parts: string[] = []
-    let placed = 0
-    for (let r = 0; r < rows; r++) {
-      if (r > 0) parts.push('<div class="cut-h"></div>')
-      const colsInRow = Math.min(cols, count - placed)
-      const rowParts: string[] = []
-      for (let c = 0; c < colsInRow; c++) {
-        if (c > 0) rowParts.push('<div class="cut-v"></div>')
-        rowParts.push(coupon)
-        placed++
+
+    if (isPortrait) {
+      for (let r = 0; r < count; r++) {
+        if (r > 0) parts.push('<div class="cut-h"></div>')
+        parts.push(`<div class="grid-row">\n${coupon}\n</div>`)
       }
-      parts.push(`<div class="grid-row">\n${rowParts.join('\n')}\n</div>`)
+    } else {
+      const cols = Math.min(count, 3)
+      let placed = 0
+      const rows = Math.ceil(count / 3)
+      for (let r = 0; r < rows; r++) {
+        if (r > 0) parts.push('<div class="cut-h"></div>')
+        const colsInRow = Math.min(cols, count - placed)
+        const rowParts: string[] = []
+        for (let c = 0; c < colsInRow; c++) {
+          if (c > 0) rowParts.push('<div class="cut-v"></div>')
+          rowParts.push(coupon)
+          placed++
+        }
+        parts.push(`<div class="grid-row">\n${rowParts.join('\n')}\n</div>`)
+      }
     }
+
     const gridHTML = parts.join('\n')
     const autoNote =
       config.print.couponsPerPage === 'auto'
-        ? ` (auto: ${count} per page, landscape)`
+        ? ` (auto: ${count} per page, ${orientLabel})`
         : ''
+    const pageW = isPortrait ? '210mm' : '297mm'
+    const pageH = isPortrait ? '297mm' : '210mm'
 
     return `<!doctype html>
 <html lang="en">
@@ -327,8 +383,8 @@ export function generateCouponHTML(
 ${css}
 </head>
 <body>
-<p class="print-hint">Print or save as PDF — ${count} coupon${count > 1 ? 's' : ''} per A4 page${autoNote}.</p>
-<div class="print-grid">
+<p class="print-hint">Print or save as PDF — ${count} coupon${count > 1 ? 's' : ''} per A4 page (${orientLabel})${autoNote}.</p>
+<div class="print-grid" style="width:${pageW};height:${pageH}">
 ${gridHTML}
 </div>
 </body>

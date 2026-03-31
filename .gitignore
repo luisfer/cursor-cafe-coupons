@@ -32,3 +32,5 @@ pnpm-debug.log*
 # Test / misc
 coverage/
 *.pdf
+the-decaf.html
+the-decaf.json

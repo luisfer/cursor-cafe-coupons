@@ -28,10 +28,12 @@ export interface CouponConfig {
     showCouponNumber: boolean
   }
   print: {
-    /** Use `"auto"` to pick 3, 6, or 9 per page from menu complexity (landscape 3-column grid). */
+    /** Use `"auto"` to pick 3, 6, or 9 per page from menu complexity. */
     couponsPerPage: number | 'auto'
-    /** @deprecated Print layout is always landscape; kept for older JSON configs. */
+    /** Page orientation. Landscape uses a 3-column grid; portrait stacks coupons full-width. Default: `"landscape"`. */
     orientation?: 'portrait' | 'landscape'
+    /** Number of columns for the drink menu inside each coupon. Default: `1`. Use `2` for wide (portrait) layouts with long menus. */
+    menuColumns?: 1 | 2
   }
   theme: {
     headerBg: string
