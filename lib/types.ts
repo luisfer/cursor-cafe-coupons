@@ -14,6 +14,10 @@ export interface CouponConfig {
   }
   event: {
     date: string
+    /** e.g. "Cafe Cursor Phnom Penh" */
+    name?: string
+    /** Secondary line under event name (e.g. Khmer locale name). */
+    subtitle?: string
   }
   menu: MenuItem[]
   options: {

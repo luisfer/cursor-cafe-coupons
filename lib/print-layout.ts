@@ -10,7 +10,10 @@ function resolveMotto(raw: string | undefined): string {
 export function estimateContentMm(config: CouponConfig): number {
   const drinks = config.menu.filter((m) => m.kind !== 'section').length
   const sections = config.menu.filter((m) => m.kind === 'section').length
-  const header = 10
+  const header =
+    10 +
+    (config.event.name?.trim() || config.event.subtitle?.trim() ? 4 : 0) +
+    (config.venue.name?.trim() ? 1 : 0)
   const heading = 4
   const drinkRow = 4
   const sectionRow = 4

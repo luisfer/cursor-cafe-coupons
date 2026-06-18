@@ -86,7 +86,9 @@ function printScale(
     headerRightGap: px(s(36, 14)),
     logoH:         px(s(26, 10)),
     venueLogoH:    px(s(72, 24)),
-    dateFs:        px(sf(15, 8)),
+    venueNameFs:   px(sf(11, 7)),
+    eventLineFs:   px(sf(10, 6)),
+    dateFs:        px(sf(14, 8)),
     numFs:         px(sf(14, 8)),
     numBoxW:       px(s(52, 20)),
     numBoxH:       px(s(24, 12)),
@@ -126,11 +128,15 @@ function printScale(
 
 function buildPrintOverrides(p: ReturnType<typeof printScale>): string {
   return `
-    .coupon .header-band{flex-wrap:wrap;padding:${p.headerPadV} ${p.headerPadH};min-height:auto;gap:${p.headerGapV} ${p.headerGapH}}
-    .coupon .logos{gap:${p.headerGapH};flex:1;min-width:0}
+    .coupon .header-band{padding:${p.headerPadV} ${p.headerPadH};min-height:auto;gap:${p.headerGapV}}
+    .coupon .header-row-primary{gap:${p.headerGapH}}
+    .coupon .logos{gap:${p.headerGapH};flex-shrink:0}
     .coupon .logos img{height:${p.logoH} !important;width:auto}
     .coupon .logos img.venue-logo{max-height:${p.venueLogoH} !important;object-fit:contain}
-    .coupon .header-right{gap:${p.headerRightGap}}
+    .coupon .venue-name{font-size:${p.venueNameFs};line-height:1.15}
+    .coupon .header-row-event{padding-top:${p.headerGapV}}
+    .coupon .event-line{font-size:${p.eventLineFs};line-height:1.2}
+    .coupon .header-meta{gap:${p.headerRightGap}}
     .coupon .date{font-size:${p.dateFs}}
     .coupon .coupon-number{font-size:${p.numFs}}
     .coupon .number-box{width:${p.numBoxW};height:${p.numBoxH}}
@@ -163,16 +169,21 @@ function buildCSS(config: CouponConfig, mode: 'single' | 'print'): string {
   const { theme } = config
 
   const base = `
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Noto+Sans+Khmer:wght@400;600&display=swap');
     *{box-sizing:border-box;margin:0;padding:0}
     body{background:#faf9f7;color:#1a1814;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;display:flex;justify-content:center;padding:24px 0}
     .coupon{width:480px;border:2px solid #14120b;background:#fff;display:flex;flex-direction:column;overflow:hidden;border-radius:2px}
-    .header-band{background:${theme.headerBg};color:${theme.headerText};padding:16px 22px;display:flex;align-items:center;justify-content:space-between;min-height:52px}
-    .logos{display:flex;align-items:center;gap:16px}
+    .header-band{background:${theme.headerBg};color:${theme.headerText};padding:14px 18px;display:flex;flex-direction:column;gap:5px}
+    .header-row-primary{display:flex;align-items:center;gap:10px;width:100%}
+    .logos{display:flex;align-items:center;gap:10px;flex-shrink:0}
     .logos img{height:26px;width:auto;display:block}
     .logos img.venue-logo{height:var(--venue-logo-h,42px);object-fit:contain}
-    .date{font-size:15px;font-weight:600;letter-spacing:.06em;color:${theme.headerText}}
-    .header-right{display:flex;align-items:center;gap:32px}
+    .venue-name{flex:1;min-width:0;font-size:13px;font-weight:600;letter-spacing:.02em;line-height:1.2;color:rgba(237,236,236,.95);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .header-meta{display:flex;align-items:center;gap:14px;flex-shrink:0;margin-left:auto}
+    .header-row-event{width:100%;text-align:center;border-top:1px solid rgba(237,236,236,.18);padding-top:5px}
+    .event-line{font-size:11px;font-weight:600;letter-spacing:.04em;line-height:1.25;color:rgba(237,236,236,.88)}
+    .event-kh{font-family:'Noto Sans Khmer','DM Sans',sans-serif;font-weight:600}
+    .date{font-size:14px;font-weight:600;letter-spacing:.06em;color:${theme.headerText};white-space:nowrap}
     .coupon-number{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;color:rgba(237,236,236,.65)}
     .number-box{width:52px;height:24px;border:1.5px solid rgba(237,236,236,.35);background:#fff;border-radius:4px}
     .body{padding:18px 22px 4px;flex:1;display:flex;flex-direction:column}
@@ -291,11 +302,21 @@ function buildCouponBlock(config: CouponConfig): string {
     : ''
 
   const dividerColor = 'rgba(237,236,236,.22)'
-  const venueLogoHTML = venue.logo
+  const venueLogoPart = venue.logo
     ? `<div style="width:1px;height:24px;background:${dividerColor}"></div>
        <img src="${venue.logo}" alt="${escapeHTML(venue.name)}" class="venue-logo" style="height:${venue.logoHeight}px" />`
-    : `<div style="width:1px;height:24px;background:${dividerColor}"></div>
-       <span style="font-size:15px;font-weight:700;letter-spacing:.02em">${escapeHTML(venue.name)}</span>`
+    : ''
+
+  const venueNameHTML = venue.name.trim()
+    ? `<div class="venue-name">${escapeHTML(venue.name)}</div>`
+    : ''
+
+  const eventName = event.name?.trim() ?? ''
+  const eventSubtitle = event.subtitle?.trim() ?? ''
+  const eventLineHTML =
+    eventName || eventSubtitle
+      ? `<div class="header-row-event"><div class="event-line">${eventName ? escapeHTML(eventName) : ''}${eventName && eventSubtitle ? ' · ' : ''}${eventSubtitle ? `<span class="event-kh">${escapeHTML(eventSubtitle)}</span>` : ''}</div></div>`
+      : ''
 
   const brandFooterHTML = motto
     ? `<div class="brand-footer">${escapeHTML(motto)}</div>`
@@ -308,14 +329,18 @@ function buildCouponBlock(config: CouponConfig): string {
 
   return `<div class="coupon">
   <div class="header-band">
-    <div class="logos">
-      <img src="${cursorLogo}" alt="Cursor" />
-      ${venueLogoHTML}
+    <div class="header-row-primary">
+      <div class="logos">
+        <img src="${cursorLogo}" alt="Cursor" />
+        ${venueLogoPart}
+      </div>
+      ${venueNameHTML}
+      <div class="header-meta">
+        <div class="date">${escapeHTML(event.date)}</div>
+        ${numberHTML}
+      </div>
     </div>
-    <div class="header-right">
-      <div class="date">${escapeHTML(event.date)}</div>
-      ${numberHTML}
-    </div>
+    ${eventLineHTML}
   </div>
   <div class="body">
     <div class="drinks-heading">${escapeHTML(menuTitle)}</div>

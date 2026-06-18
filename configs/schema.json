@@ -22,7 +22,15 @@
       "additionalProperties": false,
       "required": ["date"],
       "properties": {
-        "date": { "type": "string" }
+        "date": { "type": "string" },
+        "name": {
+          "type": "string",
+          "description": "Event title shown in the coupon header (e.g. Cafe Cursor Phnom Penh)."
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Secondary event line under the title (e.g. locale name in Khmer)."
+        }
       }
     },
     "menu": {
